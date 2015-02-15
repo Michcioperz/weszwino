@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <h2>Komentujesz {{ pst.nazwa }} jako {{ request.user }}</h2>
+    <form method="POST" action="/wino/addkom/{{ pst.pk }}/">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Dodaj" />
+    </form>
+  </body>
+</html>

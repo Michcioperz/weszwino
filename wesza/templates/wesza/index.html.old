@@ -1,0 +1,67 @@
+{% load markdowner from markdowner %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>WESZ</title>
+    <link rel="import" href="/static/components/polymer/polymer.html">
+    <script src="/static/components/platform/platform.js"></script>
+    <link rel="import" href="/static/components/core-header-panel/core-header-panel.html">
+    <link rel="import" href="/static/components/core-toolbar/core-toolbar.html">
+    <link rel="import" href="/static/components/paper-tabs/paper-tabs.html">
+    <link rel="import" href="/static/post-list.html">
+    <style>
+      html,body {
+        height: 100%;
+        margin: 0;
+        background-color: #E5E5E5;
+        font-family: 'RobotoDraft', sans-serif;
+      }
+      core-header-panel {
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch; 
+      }
+      core-toolbar {
+        background: #03a9f4;
+        color: white;
+      }
+      #tabs {
+        width: 100%;
+        margin: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        text-transform: uppercase;
+      }
+      post-card {
+        margin-bottom: 20px;
+      }
+      .container {
+        width: 80%;
+        margin: 50px auto;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <core-header-panel>
+      <div class="container" layout vertical center>
+          {% for post in posts %}
+          <post-card type="{{ post.category.codename }}">
+            <fab-group>
+              {% if post.pinned %}<paper-fab icon="star"></paper-fab>{% endif %}
+              {% if post.daysleft < 3 %}<paper-fab icon="alarm"></paper-fab>{% endif %}
+            </fab-group>
+            <h2>{{ post.humdate }}</h2>
+            <h3>{{ post.category.singular }}</h3>
+            <h3>{% firstof post.subject "brak przedmiotu" %}</h3>
+            <h4>{{ post.name }}</h4>
+            {{ post.description | markdowner }}
+          </post-card>
+          {% endfor %}
+      </div>
+    </core-header-panel>
+  </body>
+</html>

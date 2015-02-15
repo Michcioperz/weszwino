@@ -1,0 +1,43 @@
+{% extends "wino/core.html" %}
+{% load markdowner from markdowner %}
+{% block title %}Strona główna{% endblock title %}
+{% block body %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#wowsuchnavbarinside">
+            <span class="sr-only">Toggle nav</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://ijestfajnie.pl/stasioo/">Stasioo Project</a>
+        </div>
+        <div class="collapse navbar-collapse" id="wowsuchnavbarinside">
+          <ul class="nav navbar-nav">
+            <li><a href="http://ijestfajnie.pl/wesz/">WESZ</a></li>
+            <li class="active"><a href="http://ijestfajnie.pl/wino/">WINO</a></li>
+            <li class="pull-right"><a href="http://ijestfajnie.pl/admin/">Kryjówka Adminów</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>WINO <small>rocznik '98</small></h1>
+        <div class="pull-right michinomAd"></div>
+      </div>
+    </div>
+    <div class="container">
+      {% for pst in posts %}
+      <div class="jumbotron wesz-post" type="{{ pst.rodzaj.codename }}">
+        <h4><small>Nauczyciel:</small> {{ pst.nauczyciel }}</h4>
+        <h4><small>Kategoria:</small> {{ pst.rodzaj.singular }}</h4>
+        <h4><small>Przedmiot:</small> {{ pst.przedmiot }}</h4>
+        <h3>{{ pst.nazwa }}</h3>
+        <a role="button" href="{% url 'wino:single_post' pst.pk %}" class="btn btn-primary pull-right">Terminy i szczegóły</a>
+        <div class="progress">{% for trm in pst.terminarz %}<div class="progress-bar progress-bar-{% if trm.juzbylo %}success{% else %}striped progress-bar-{% if trm.dnizost < 2 %}warning active{% else %}danger{% endif %}{% endif %}" style="width: {{ pst.termproc | stringformat:"f" }}%">{{ trm.klasa }}</div>{% endfor %}</div>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock body %}

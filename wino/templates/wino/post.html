@@ -1,0 +1,43 @@
+{% extends "wino/core.html" %}
+{% load markdowner from markdowner %}
+{% block title %}{{ pst.nazwa }}{% endblock title %}
+{% block body %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#wowsuchnavbarinside">
+            <span class="sr-only">Toggle nav</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://ijestfajnie.pl/stasioo/">Stasioo Project</a>
+        </div>
+        <div class="collapse navbar-collapse" id="wowsuchnavbarinside">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'wino:index' %}">WINO</a></li>
+            <li class="active"><a href="{% url 'wesza:index' %}">WESZ</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="jumbotron wesz-post" type="{{ pst.rodzaj.codename }}">
+        <h4><small>Nauczyciel:</small> {{ pst.nauczyciel }}</h4>
+        <h4><small>Kategoria:</small> {{ pst.rodzaj.singular }}</h4>
+        <h4><small>Przedmiot:</small> {{ pst.przedmiot }}</h4>
+        <h3>{{ pst.nazwa }}</h3>
+        <table class="table table-striped"><thead><tr><th>klasa</th><th>dzień</th><th>godzina lekcyjna</th><th>już było?</th></tr></thead><tbody>
+        {% for trm in trms %}
+          <tr><td>{{ trm.klasa }}</td><td>{{ trm.dzien }}</td><td>{{ trm.lekcja }}</td>{% if trm.juzbylo %}<td class="success">TAK</td>{% else %}<td class="danger">NIE</td>{% endif %}</tr>
+        {% endfor %}
+        </tbody></table>
+        <a class="btn btn-primary" href="{% url 'wino:addkomm' pst.pk %}">Dodaj komentarz</a>
+        <ul>
+        {% for kmn in kmns %}
+          <li>{{ kmn.uzytkownik }} - {{ kmn.czas }} {{ kmn.tresc | markdowner | safe }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+{% endblock body %}

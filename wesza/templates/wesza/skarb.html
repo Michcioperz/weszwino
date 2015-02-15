@@ -1,0 +1,13 @@
+{% extends 'wesza/core.html' %}
+{% block title %}Skarb Państwa{% endblock title %}
+{% block body %}
+<div class="container">
+  {% for skladka in skladki %}
+    <div class="jumbotron">
+      <h1>{{ skladka.name }}</h1>
+      <h2>{{ skladka.kwota }} zł na za {{ skladka.daysleft }} dni</h2>
+      <h3>Wpłat {{ skladka.wplaty.count }} z {{ skladka.potrzebne }} (brakuje {{ skladka.wplaleft }})</h3>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

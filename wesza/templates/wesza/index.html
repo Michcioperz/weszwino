@@ -1,0 +1,48 @@
+{% extends "wesza/core.html" %}
+{% load markdowner from markdowner %}
+{% block title %}Strona główna{% endblock title %}
+{% block body %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#wowsuchnavbarinside">
+            <span class="sr-only">Toggle nav</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'stasioo:index' %}">Stasioo Project</a>
+        </div>
+        <div class="collapse navbar-collapse" id="wowsuchnavbarinside">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'wesza:index' %}">WESZ</a></li>
+            <li><a href="{% url 'wino:index' %}">WINO</a></li>
+            <li class="pull-right"><a href="/admin/">Kryjówka Adminów</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>W<small>ypracowania</small> E<small>mocje</small> S<small>prawdziany</small> Z<small>adanka</small></h1>
+        <h1>W<small>ielce</small> E<small>ksperymentalny</small> S<small>posób</small> Z<small>apisu</small></h1>
+        <div class="pull-right michinomAd"></div>
+      </div>
+    </div>
+    <div class="container">
+      {% for post in posts %}
+      <div class="jumbotron wesz-post" type="{{ post.category.codename }}">
+        <div class="pull-right">
+          {% if post.pinned %}<div class="notificon"><span class="glyphicon glyphicon-star"></span></div>{% endif %}
+          {% if post.daysleft < 3 %}<div class="notificon"><span class="glyphicon glyphicon-bell"></span></div>{% endif %}
+        </div>
+        <h2>{{ post.humdate }}</h2>
+        <h4><small>Kategoria: </small>{{ post.category.singular }}</h4>
+        <h4><small>Przedmiot: </small>{% firstof post.subject "brak" %}{% if post.teacher %} (nauczyciel: p. {{ post.teacher.nazwisko }}){% endif %}</h4>
+        <h3>{{ post.name }}</h3>
+        <blockquote>{{ post.description | markdowner | safe }}</blockquote>
+        <a role="button" href="{% url 'wesza:single_post' post.pk %}" class="btn btn-primary btn-xs pull-right">Link bezpośredni</a>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock body %}

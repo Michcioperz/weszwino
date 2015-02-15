@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %} - WINO</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <style>
+      .jumbotron {
+        margin-top: 20px;
+      }
+      .notificon {
+        font-size: 50px;
+        background-color: black;
+        color: white;
+        text-align: center;
+        vertical-align: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+        margin-bottom: 5px;
+      }
+      .notificon .glyphicon-star {
+        color: gold;
+      }
+      .notificon .glyphicon-bell {
+        color: red;
+      }
+      .greenlit {
+        color: lime;
+      }
+      .redlit {
+        color: red;
+      }
+    </style>
+
+    <script type="text/javascript" href="//code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" href="//ijestfajnie.pl/ad.js"></script>
+    <script type="text/javascript" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    {% block body %}{% endblock body %}
+  </body>
+</html>

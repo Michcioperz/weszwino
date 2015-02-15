@@ -1,0 +1,44 @@
+{% extends "wesza/core.html" %}
+{% load markdowner from markdowner %}
+{% block title %}{{ pst.name }}{% endblock title %}
+{% block body %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#wowsuchnavbarinside">
+            <span class="sr-only">Toggle nav</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'stasioo:index' %}">Stasioo Project</a>
+        </div>
+        <div class="collapse navbar-collapse" id="wowsuchnavbarinside">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'wesza:index' %}">WESZ</a></li>
+            <li><a href="{% url 'wino:index' %}">WINO</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>W<small>ypracowania</small>E<small>mocje</small>S<small>prawdziany</small>Z<small>adanka</small></h1>
+        <h1>W<small>ielce</small>E<small>ksperymentalny</small>S<small>posób</small>Z<small>apisu</small></h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="jumbotron wesz-post" type="{{ pst.category.codename }}">
+        <div class="pull-right">
+          {% if pst.pinned %}<div class="notificon"><span class="glyphicon glyphicon-star"></span></div>{% endif %}
+          {% if pst.daysleft < 3 %}<div class="notificon"><span class="glyphicon glyphicon-bell"></span></div>{% endif %}
+        </div>
+        <h2>{{ pst.date }} - {{ pst.humdate }}</h2>
+        <h4><small>Kategoria:</small> {{ pst.category.singular }}</h4>
+        <h4><small>Przedmiot:</small> {% firstof pst.subject "brak" %}{% if pst.teacher %} (nauczyciel: p. {{ pst.teacher.nazwisko }}){% endif %}</h4>
+        <h3>{{ pst.name }}</h3>
+        <blockquote>{{ pst.description | markdowner | safe }}</blockquote>
+        <a role="button" class="btn pull-right" href="{% url 'admin:wesza_event_change' pst.pk %}">Edytuj<small> (jeśli jesteś adminem)</small></a>
+      </div>
+    </div>
+{% endblock body %}
